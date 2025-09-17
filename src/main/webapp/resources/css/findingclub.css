@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+
+
+.category_title{
+	font-weight:bold;
+	font-size:1em;
+}
+
+.category_explanation{
+	font-size:0.8em;
+	color::gray;
+	padding-top: 3vh;
+	height:12vh;
+}
+
+
+.category_box{
+	border: 1px solid #EAEAEA;
+	width: 25em;
+	height: 12.9em;
+	border-radius: 0.4em;
+}
+
+.category_image {
+	width:7em;
+	height:10em;
+}
+
+.button{
+	background-color: #A2CBEA;
+	width: 7em;
+	height: 1.7em;
+	border:none;
+	border-radius:5px;
+}
+
+.club_box_list{
+	width: 75em;
+	height:13.5em;
+}
+
+.club_box{
+	width: 15.1em;
+	height: 12.9em;
+	border-radius: 0.4em;
+}
+
+.club_box:hover{
+	
+}
+
+
+
+img:hover{
+	background-color:#A0A0A0;
+	transition: all 0.3s;
+}
+
+a {
+  transition: background-color .5s;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+
+/* Blur + Gray Scale */
+.club_box img {
+  -webkit-filter: grayscale(0) blur(0);
+  filter: grayscale(0) blur(0);
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+.club_box:hover img {
+  -webkit-filter: grayscale(100%) blur(3px);
+  filter: grayscale(100%) blur(3px);
+}
+
+
+.club_box span {
+  bottom: -20px;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 300px;
+  margin: 0;
+  padding: 0;
+  color: #444;
+  font-size: 18px;
+  text-decoration: none;
+  text-align: center;
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+  opacity: 1;
+}
+figure {
+  width: 15em;
+  height: 11em;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  overflow: hidden;
+}
+figure:hover+span {
+  bottom: -36px;
+  opacity: 1;
+}

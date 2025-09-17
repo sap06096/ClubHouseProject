@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ja.cbh.staff.applyClub.mapper.Staff_ApplyClubSQLMapper">
+
+	<update id="updateClubApplyStateByNo">
+		UPDATE CBH_CLUB_APPL SET CLUB_APPL_STATE = #{STATE} WHERE CLUB_APPL_NO = #{NO}
+	</update>
+
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM CBH_CLUB_APPL 
+		WHERE CLUB_NAME LIKE '%' || #{searchWord} || '%'
+	</select>
+
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ja.cbh.student.establishingclub.mapper.EstablishingClubSQLMapper">
+
+	<insert id="insertClubAppl">
+		INSERT INTO CBH_CLUB_APPL VALUES(
+			CBH_CLUB_APPL_SEQ.nextval,
+			#{clubApplVO.stud_id},
+			#{clubApplVO.club_category_no},
+			#{clubApplVO.club_name},
+			#{clubApplVO.club_appl_people_count},
+			#{clubApplVO.club_purpose},
+			SYSDATE,
+			3
+		)	
+	</insert>
+	
+	<insert id="insertClub">
+		INSERT INTO CBH_CLUB VALUES(
+			#{clubVO.club_no},
+			1,
+			#{clubVO.club_category_no},
+			#{clubVO.club_appl_no},
+			#{clubVO.club_boss},
+			#{clubVO.club_name},
+			#{clubVO.club_description},
+			#{clubVO.club_people_count},
+			1,
+			#{clubVO.club_title_image},
+			#{clubVO.club_dscrp_image},
+			SYSDATE,
+			#{clubVO.club_appl_dt}
+		)
+	</insert>
+	
+	<select id="selectAllEstablishingRequestResultByStudId" resultType="com.ja.cbh.vo.Club_ApplVO">
+		SELECT * FROM CBH_CLUB_APPL
+		WHERE STUD_ID = #{stud_id}
+	</select>
+
+	<select id="selectApprovedClubApplByStudId" resultType="com.ja.cbh.vo.Club_ApplVO">
+		SELECT * FROM CBH_CLUB_APPL
+		WHERE STUD_ID = #{stud_id}
+		AND CLUB_APPL_STATE = 1
+	</select>
+
+	<select id="selectClubStudByStudId" resultType="com.ja.cbh.vo.Club_StudVO">
+		SELECT * FROM CBH_CLUB_STUD
+		WHERE STUD_ID = #{studId}
+	</select>
+	
+	<update id="updateClubApplStateByApplNo">
+	 UPDATE CBH_CLUB_APPL
+	 SET CLUB_APPL_STATE = 4
+	 WHERE CLUB_APPL_NO = #{applNo}
+	</update>
+
+
+	<!-- 전체 -->
+	<select id="selectAllEstablishingRequestResult" resultType="com.ja.cbh.vo.Club_ApplVO">
+		SELECT t2.* FROM (
+			SELECT t1.* , ROWNUM as rnum FROM (
+				SELECT * FROM CBH_CLUB_APPL 
+					<if test="searchWord != null">
+							WHERE CLUB_NAME LIKE '%' || #{searchWord} || '%'
+					</if>
+				ORDER BY CLUB_APPL_NO DESC
+			)t1
+		)t2	
+		<![CDATA[
+		WHERE t2.rnum >= (#{pageNum}-1)*10+1 AND t2.rnum <= #{pageNum}*10
+		]]>	
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM CBH_CLUB_APPL 
+		WHERE CLUB_NAME LIKE '%' || #{searchWord} || '%'
+	</select>
+	
+	<select id="selectRequestByStudId" resultType="com.ja.cbh.vo.Club_ApplVO">
+		SELECT * FROM CBH_CLUB_APPL
+		WHERE STUD_ID = #{studId}
+	</select>
+	
+	<select id="selectRequestByNo" resultType="com.ja.cbh.vo.Club_ApplVO">
+		SELECT * FROM CBH_CLUB_APPL
+		WHERE CLUB_APPL_NO = #{applNo}
+	</select>
+	
+	<insert id="insertClubStudByStud">
+		INSERT INTO CBH_CLUB_STUD VALUES(
+			CBH_CLUB_STUD_SEQ.NEXTVAL,
+			#{clubStudVO.stud_id},
+			#{clubStudVO.club_no},
+			'대표',
+			SYSDATE,
+			SYSDATE,
+			'',
+			'동아리 회장',
+			'활동중'
+		)
+	</insert>
+	
+	<select id="createClubPk" resultType="int">
+		SELECT CBH_CLUB_SEQ.nextval FROM dual
+	</select>
+
+
+</mapper>
+
